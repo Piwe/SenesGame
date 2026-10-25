@@ -168,10 +168,82 @@
     requestAnimationFrame(frame);
   }
 
+  // --------------------------------------------------------------- install
+
+  const HOSTED_URL = 'https://piwe.github.io/SenesGame/settings.html';
+  const installStatus = document.getElementById('install-status');
+  const installButton = document.getElementById('install-button');
+  let installPrompt = null; // saved beforeinstallprompt event, when the browser offers one
+
+  function isInstalled() {
+    return window.matchMedia('(display-mode: fullscreen)').matches ||
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+  }
+
+  function isIOS() {
+    // iPadOS reports itself as a Mac, so also check for a touch screen.
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+
+  function setInstallStatus(message, link) {
+    installStatus.textContent = message;
+    if (link) {
+      const a = document.createElement('a');
+      a.href = link;
+      a.textContent = link;
+      installStatus.append(' ', a);
+    }
+  }
+
+  function updateInstallState() {
+    installButton.hidden = !installPrompt || isInstalled();
+    if (isInstalled()) {
+      setInstallStatus('Installed. You are using the app version of the game.');
+    } else if (window.location.protocol === 'file:') {
+      setInstallStatus('This copy is running from files on this device and can be played as it is. To install the app on a tablet, open:', HOSTED_URL);
+    } else if (installPrompt) {
+      setInstallStatus('Install the game to play it full-screen and offline, straight from the home screen.');
+    } else if (isIOS()) {
+      setInstallStatus('On iPad or iPhone: tap the Share button in Safari, then choose "Add to Home Screen".');
+    } else {
+      setInstallStatus('Use your browser\'s menu and choose "Install app" or "Add to Home Screen". If the game is already installed, open it from the home screen or app list.');
+    }
+  }
+
+  window.addEventListener('beforeinstallprompt', e => {
+    // Keep the browser's prompt for the Install button instead of showing it straight away.
+    e.preventDefault();
+    installPrompt = e;
+    updateInstallState();
+  });
+
+  installButton.addEventListener('click', async () => {
+    if (!installPrompt) return;
+    const prompt = installPrompt;
+    installPrompt = null;
+    prompt.prompt();
+    const choice = await prompt.userChoice;
+    if (choice.outcome === 'accepted') {
+      installButton.hidden = true;
+      setInstallStatus('Installing. Open "Senes Game" from the home screen or app list when it is ready.');
+    } else {
+      updateInstallState();
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installPrompt = null;
+    installButton.hidden = true;
+    setInstallStatus('Installed. Open "Senes Game" from the home screen or app list.');
+  });
+
   // ----------------------------------------------------------------- start
 
   fillForm(cfg);
   showValues();
+  updateInstallState();
   sample.x = previewWidth / 2;
   window.addEventListener('resize', resizePreview);
   requestAnimationFrame(frame);

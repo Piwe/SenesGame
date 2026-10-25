@@ -35,6 +35,8 @@ The page includes a live preview of a shape at the chosen size and speed. **Defa
 
 The game is a Progressive Web App: install it once and it runs full-screen and offline.
 
+The easiest way is the **Install as an app** section at the top of the [settings page](https://piwe.github.io/SenesGame/settings.html). On Chrome, Edge and Android it shows an **Install app** button. On iPad and iPhone it shows the steps below, because iOS browsers can't show an install prompt. You can also install from the browser directly:
+
 - **Android (Chrome):** open the play link → ⋮ menu → **Install app**. Long-pressing the app icon offers a **Settings** shortcut.
 - **iPad / iPhone (Safari):** open the play link → Share → **Add to Home Screen**.
 
@@ -58,7 +60,7 @@ git clone https://github.com/Piwe/SenesGame.git
 | `game.js` | Game loop, spawning, collision avoidance, touch handling, pop effects and sound |
 | `shapes.js` | Shape drawing and colour palette, shared by the game and the settings page |
 | `config.js` | Settings defaults, limits and validation; saves to `localStorage` |
-| `settings.html` / `settings.js` | The settings page with shape picker, sliders, preview and calibration |
+| `settings.html` / `settings.js` | The settings page with install button, shape picker, sliders, preview and calibration |
 | `manifest.webmanifest` | App name, icons and full-screen display for installing |
 | `sw.js` | Service worker: fetches fresh files when online, serves cached copies offline |
 | `pwa.js` | Registers the service worker (only over http/https) |

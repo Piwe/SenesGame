@@ -67,6 +67,23 @@
 
     #shape-note { margin: 12px 0 0; min-height: 1.2em; }
 
+    #install-status { margin: 0; }
+    #install-status a { color: var(--accent); font-weight: 600; word-break: break-all; }
+
+    .primary-button {
+      margin-top: 14px;
+      font: inherit;
+      font-weight: 700;
+      padding: 12px 22px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .primary-button[hidden] { display: none; }
+
     .hint { margin: 6px 0 0; font-size: 0.9rem; color: var(--muted); }
 
     /* Shape picker */
@@ -188,6 +205,12 @@
       <h1>Senes Game</h1>
       <p>Settings for grown-ups. Changes are saved as you make them.</p>
     </header>
+
+    <section>
+      <h2>Install as an app</h2>
+      <p class="hint" id="install-status" aria-live="polite"></p>
+      <button type="button" class="primary-button" id="install-button" hidden>Install app</button>
+    </section>
 
     <section>
       <div class="section-head">
