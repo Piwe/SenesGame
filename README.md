@@ -33,16 +33,46 @@ The page includes a live preview of a shape at the chosen size and speed. **Defa
 
 ## Install on a tablet
 
-The game is a Progressive Web App: install it once and it runs full-screen and offline.
+The game is a Progressive Web App: install it once and it opens from the home screen, runs full-screen and works offline.
 
-The easiest way is the **Install as an app** section at the top of the [settings page](https://piwe.github.io/SenesGame/settings.html). On Chrome, Edge and Android it shows an **Install app** button. On iPad and iPhone it shows the steps below, because iOS browsers can't show an install prompt. You can also install from the browser directly:
+### Using the Install button
 
-- **Android (Chrome):** open the play link → ⋮ menu → **Install app**. Long-pressing the app icon offers a **Settings** shortcut.
+1. On the tablet, open the settings page: https://piwe.github.io/SenesGame/settings.html
+2. Find the **Install as an app** section at the top of the page.
+3. Follow what it shows for your device:
+
+| Device / browser | What you see | What to do |
+|---|---|---|
+| Android tablet or phone (Chrome, Edge, Samsung Internet) | An **Install app** button | Tap **Install app**, then **Install** in the browser's prompt. The section says "Installing…" and then "Installed". |
+| Windows, macOS or ChromeOS laptop (Chrome, Edge) | An **Install app** button | Click **Install app**, then **Install**. The game gets its own window and a Start menu / Launchpad entry. |
+| iPad or iPhone | Step-by-step instructions instead of a button | In Safari, tap **Share**, then **Add to Home Screen**, then **Add**. iOS browsers can't show an install prompt, so there's no button. |
+| Already installed and opened from the home screen | "Installed. You are using the app version of the game." | Nothing to do. |
+| Opened from files on a laptop | A link to the hosted settings page | Open that link on the device you want to install on. Copies opened from files can't be installed but can be played as they are. |
+
+**If no button appears** in Chrome or Edge, the game is probably already installed on that device. Open it from the home screen or app list. If not, use the browser's menu as described below.
+
+**If you cancel** the browser's prompt, the button comes back so you can try again.
+
+### Installing from the browser menu
+
+You can also install without the button:
+
+- **Android (Chrome):** open the play link → ⋮ menu → **Install app** (or **Add to Home screen**).
+- **Laptop (Chrome / Edge):** open the play link → click the install icon in the address bar, or menu → **Install Senes Game**.
 - **iPad / iPhone (Safari):** open the play link → Share → **Add to Home Screen**.
 
-After installing, do the screen calibration inside the installed app (on iPad the home-screen app keeps its own settings, separate from Safari).
+### After installing
 
-For a toddler-proof setup, also turn on **Guided Access** (iPad) or **Screen Pinning** (Android) so the game can't be left by accident.
+- **Calibrate inside the installed app.** Open it, hold the top-left corner for 3 seconds to reach settings, and do the bank-card calibration there. On iPad the home-screen app keeps its own settings, separate from Safari.
+- **Settings shortcut on Android:** long-press the app icon and choose **Settings** to open the settings page directly.
+- **Updates install themselves.** The app picks up new versions the next time it opens with an internet connection.
+- **Make it toddler-proof:** turn on **Guided Access** (iPad) or **Screen Pinning** (Android) so the game can't be left by accident.
+
+### Uninstalling
+
+- **Android:** long-press the app icon → **Uninstall** (or drag it to **Uninstall**).
+- **iPad / iPhone:** long-press the icon → **Remove App** → **Delete from Home Screen**.
+- **Laptop (Chrome / Edge):** open the app → ⋮ menu in its title bar → **Uninstall Senes Game**.
 
 ## Play on a laptop without installing
 
