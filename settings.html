@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1b1f3b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Senes Game Settings</title>
+  <style>
+    :root {
+      --page: #1b1f3b;
+      --card: #f7f7fb;
+      --ink: #1b1f3b;
+      --muted: #555a7a;
+      --line: #dcdcea;
+      --accent: #1982c4;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 16px 120px;
+    }
+
+    header { color: #fff; margin-bottom: 20px; }
+    header h1 { margin: 0; font-size: 1.8rem; }
+    header p { margin: 4px 0 0; color: #b9bcd8; }
+
+    section {
+      margin-bottom: 16px;
+      padding: 20px;
+      border-radius: 16px;
+      background: var(--card);
+      overflow-x: auto;
+    }
+
+    h2 { margin: 0 0 16px; font-size: 1.15rem; }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .link-button {
+      font: inherit;
+      font-weight: 600;
+      padding: 4px 0;
+      border: 0;
+      background: none;
+      color: var(--accent);
+      cursor: pointer;
+    }
+
+    #shape-note { margin: 12px 0 0; min-height: 1.2em; }
+
+    .hint { margin: 6px 0 0; font-size: 0.9rem; color: var(--muted); }
+
+    /* Shape picker */
+    .shape-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+      gap: 10px;
+    }
+
+    .shape-option { position: relative; cursor: pointer; }
+
+    .shape-option input {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 22px;
+      height: 22px;
+      margin: 0;
+      accent-color: var(--accent);
+    }
+
+    .shape-option span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 6px 10px;
+      border: 3px solid var(--line);
+      border-radius: 12px;
+      background: var(--page);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .shape-option canvas { width: 56px; height: 56px; opacity: 0.4; }
+    .shape-option input:checked + span canvas { opacity: 1; }
+
+    .shape-option input:checked + span { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(25, 130, 196, 0.35); }
+    .shape-option input:focus-visible + span { outline: 3px solid var(--ink); outline-offset: 2px; }
+
+    /* Sliders */
+    .field { margin-bottom: 22px; }
+    .field:last-child { margin-bottom: 0; }
+
+    .field label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 600;
+    }
+
+    .field output { font-weight: 400; font-variant-numeric: tabular-nums; }
+
+    input[type="range"] {
+      display: block;
+      width: 100%;
+      height: 36px;
+      margin: 8px 0 0;
+      accent-color: var(--accent);
+    }
+
+    .preview {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 12px;
+      background: var(--page);
+    }
+
+    /* Sound toggle */
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .toggle input { width: 28px; height: 28px; accent-color: var(--accent); }
+
+    #calibration-bar {
+      display: block;
+      height: 18px;
+      margin-top: 14px;
+      border-radius: 3px;
+      background: var(--accent);
+    }
+
+    /* Bottom action bar */
+    .actions {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+      background: rgba(27, 31, 59, 0.95);
+    }
+
+    .actions button {
+      font: inherit;
+      font-weight: 700;
+      padding: 14px 24px;
+      border: 0;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    #reset { background: var(--line); color: var(--ink); }
+    #play { flex: 0 1 280px; background: var(--accent); color: #fff; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Senes Game</h1>
+      <p>Settings for grown-ups. Changes are saved as you make them.</p>
+    </header>
+
+    <section>
+      <div class="section-head">
+        <h2>Shapes</h2>
+        <button type="button" class="link-button" id="select-all">Select all</button>
+      </div>
+      <div class="shape-grid" id="shape-grid" role="group" aria-label="Shapes in the game"></div>
+      <p class="hint" id="shape-note" aria-live="polite">Tick the shapes to include in the game.</p>
+    </section>
+
+    <section>
+      <h2>Size and speed</h2>
+      <div class="field">
+        <label for="sizeCm">Shape size <output id="sizeCm-value"></output></label>
+        <input type="range" id="sizeCm" min="4" max="16" step="0.5">
+        <p class="hint">8 cm is about the length of a 10-month-old's hand.</p>
+      </div>
+      <div class="field">
+        <label for="speed">Shape speed <output id="speed-value"></output></label>
+        <input type="range" id="speed" min="5" max="200" step="5">
+        <p class="hint">Shapes move three times faster after the first touch.</p>
+      </div>
+      <div class="field">
+        <label for="maxCircles">Shapes on screen <output id="maxCircles-value"></output></label>
+        <input type="range" id="maxCircles" min="1" max="20" step="1">
+      </div>
+      <canvas class="preview" id="preview" aria-label="Preview of a shape at the chosen size and speed"></canvas>
+      <p class="hint">Preview at actual size and speed once the screen is calibrated.</p>
+    </section>
+
+    <section>
+      <h2>Sound</h2>
+      <label class="toggle"><input type="checkbox" id="sound"> Play sounds when shapes are touched</label>
+    </section>
+
+    <section>
+      <h2>Screen calibration</h2>
+      <label for="pxPerCm" class="hint">Hold a bank card against the screen and adjust until the bar is as long as the card's short edge (5.4 cm).</label>
+      <span id="calibration-bar"></span>
+      <input type="range" id="pxPerCm" min="25" max="75" step="0.5">
+    </section>
+  </main>
+
+  <div class="actions">
+    <button type="button" id="reset">Defaults</button>
+    <button type="button" id="play">Play</button>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="shapes.js"></script>
+  <script src="settings.js"></script>
+  <script src="pwa.js"></script>
+</body>
+</html>
